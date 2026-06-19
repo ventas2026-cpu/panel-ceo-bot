@@ -38,7 +38,13 @@ for prod in productos_encontrados:
             st.write(f"**Precio de Venta Sugerido:** ${precio_venta:.2f}")
             
             if st.button(f"Lanzar Publicidad", key=prod['nombre']):
-                datos_para_ia = {"producto": prod["nombre"], "precio": f"${precio_venta:.2f}"}
+                # --- AQUÍ ESTÁ EL CAMBIO: Agregamos la llave 'imagen_url' ---
+                datos_para_ia = {
+                    "producto": prod["nombre"], 
+                    "precio": f"${precio_venta:.2f}",
+                    "imagen_url": prod["img"] 
+                }
+                
                 try:
                     requests.post(MAKE_WEBHOOK_URL, json=datos_para_ia)
                     st.success(f"¡Orden ejecutada! La IA está creando anuncios para {prod['nombre']}.")
