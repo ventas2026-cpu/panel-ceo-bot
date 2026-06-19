@@ -5,7 +5,7 @@ import requests
 st.set_page_config(page_title="Panel CEO", page_icon="📱", layout="centered")
 
 # Enlace de Make (Simulador por ahora)
-MAKE_WEBHOOK_URL = "https://hook.us1.make.com/tu_codigo_secreto"
+MAKE_WEBHOOK_URL = "https://hook.us2.make.com/7gwzs8q25amgf72xlpwatafvhgfvgal3"
 
 # Simulador de los productos recomendados por la IA
 productos_encontrados = [
