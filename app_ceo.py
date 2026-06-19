@@ -40,7 +40,7 @@ for prod in productos_encontrados:
             if st.button(f"Lanzar Publicidad", key=prod['nombre']):
                 datos_para_ia = {"producto": prod["nombre"], "precio": f"${precio_venta:.2f}"}
                 try:
-                    # requests.post(MAKE_WEBHOOK_URL, json=datos_para_ia)
+                    requests.post(MAKE_WEBHOOK_URL, json=datos_para_ia)
                     st.success(f"¡Orden ejecutada! La IA está creando anuncios para {prod['nombre']}.")
                 except Exception as e:
                     st.error(f"Fallo en la conexión: {e}")
