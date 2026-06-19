@@ -38,11 +38,11 @@ for prod in productos_encontrados:
             st.write(f"**Precio de Venta Sugerido:** ${precio_venta:.2f}")
             
             if st.button(f"Lanzar Publicidad", key=prod['nombre']):
-                # --- AQUÍ ESTÁ EL CAMBIO: Agregamos la llave 'imagen_url' ---
+                # AQUÍ ESTÁ EL PAQUETE JSON COMPLETO
                 datos_para_ia = {
                     "producto": prod["nombre"], 
                     "precio": f"${precio_venta:.2f}",
-                    "imagen_url": prod["img"], 
+                    "imagen_url": prod["img"]
                 }
                 
                 try:
