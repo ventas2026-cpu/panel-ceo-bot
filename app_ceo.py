@@ -10,11 +10,11 @@ MAKE_WEBHOOK_URL = "https://hook.us2.make.com/7gwzs8q25amgf72xlpwatafvhgfvgal3"
 # Simulador de los productos recomendados por la IA
 # Simulador con imágenes reales (.jpg) para pasar el estricto filtro de Instagram
 productos_encontrados = [
-    {"nombre": "Cama Nube Mascotas", "costo": 12.00, "envio": 2.50, "img": "https://es.pngtree.com/free-tree-png"},
-    {"nombre": "Humidificador Llama", "costo": 15.00, "envio": 0.00, "img": "https://es.pngtree.com/free-tree-png"},
-    {"nombre": "Corrector Postura", "costo": 8.00, "envio": 1.50, "img": "https://es.pngtree.com/free-tree-png"},
-    {"nombre": "Cepillo Quita Pelos", "costo": 4.00, "envio": 4.50, "img": "https://es.pngtree.com/free-tree-png"},
-    {"nombre": "Lámpara Galaxia", "costo": 18.00, "envio": 3.00, "img": "https://es.pngtree.com/free-tree-png"}
+    {"nombre": "Cama Nube Mascotas", "costo": 12.00, "envio": 2.50, "img": ""},
+    {"nombre": "Humidificador Llama", "costo": 15.00, "envio": 0.00, "img": ""},
+    {"nombre": "Corrector Postura", "costo": 8.00, "envio": 1.50, "img": ""},
+    {"nombre": "Cepillo Quita Pelos", "costo": 4.00, "envio": 4.50, "img": ""},
+    {"nombre": "Lámpara Galaxia", "costo": 18.00, "envio": 3.00, "img": ""}
 ]
 
 # --- ENCABEZADO ---
