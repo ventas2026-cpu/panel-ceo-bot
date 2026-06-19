@@ -10,11 +10,11 @@ MAKE_WEBHOOK_URL = "https://hook.us2.make.com/7gwzs8q25amgf72xlpwatafvhgfvgal3"
 # Simulador de los productos recomendados por la IA
 # Simulador con imágenes reales (.jpg) para pasar el estricto filtro de Instagram
 productos_encontrados = [
-    {"nombre": "Cama Nube Mascotas", "costo": 12.00, "envio": 2.50, "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/800px-Cat03.jpg"},
-    {"nombre": "Humidificador Llama", "costo": 15.00, "envio": 0.00, "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/A_simple_humidifier.jpg/800px-A_simple_humidifier.jpg"},
-    {"nombre": "Corrector Postura", "costo": 8.00, "envio": 1.50, "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Posture_correction.jpg/800px-Posture_correction.jpg"},
-    {"nombre": "Cepillo Quita Pelos", "costo": 4.00, "envio": 4.50, "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Dog_brush.jpg/800px-Dog_brush.jpg"},
-    {"nombre": "Lámpara Galaxia", "costo": 18.00, "envio": 3.00, "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Galaxy_lamp.jpg/800px-Galaxy_lamp.jpg"}
+    {"nombre": "Cama Nube Mascotas", "costo": 12.00, "envio": 2.50, "img": "https://es.pngtree.com/free-tree-png/cartoon-tree"},
+    {"nombre": "Humidificador Llama", "costo": 15.00, "envio": 0.00, "img": "https://es.pngtree.com/free-tree-png/cartoon-tree"},
+    {"nombre": "Corrector Postura", "costo": 8.00, "envio": 1.50, "img": "https://es.pngtree.com/free-tree-png/cartoon-tree"},
+    {"nombre": "Cepillo Quita Pelos", "costo": 4.00, "envio": 4.50, "img": "https://es.pngtree.com/free-tree-png/cartoon-tree"},
+    {"nombre": "Lámpara Galaxia", "costo": 18.00, "envio": 3.00, "img": "https://es.pngtree.com/free-tree-png/cartoon-tree"}
 ]
 
 # --- ENCABEZADO ---
