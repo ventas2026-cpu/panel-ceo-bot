@@ -42,7 +42,7 @@ for prod in productos_encontrados:
                 datos_para_ia = {
                     "producto": prod["nombre"], 
                     "precio": f"${precio_venta:.2f}",
-                    "imagen_url": prod["img"] 
+                    "imagen_url": prod["img"], 
                 }
                 
                 try:
