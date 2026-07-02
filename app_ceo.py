@@ -4,49 +4,89 @@ import requests
 # --- CONFIGURACIÓN DE LA PÁGINA MÓVIL ---
 st.set_page_config(page_title="Panel CEO", page_icon="📱", layout="centered")
 
-# Reemplaza este enlace con tu Webhook real de Make
-MAKE_WEBHOOK_URL = "https://hook.us1.make.com/tu_codigo_secreto" 
+# --- CONEXIONES MAESTRAS ---
+MAKE_WEBHOOK_URL = "https://hook.us1.make.com/tu_codigo_secreto" # Reemplaza con tu Webhook de Make
+CJ_API_KEY = "PEGA_TU_API_KEY_AQUI" # <--- ¡Pega tu llave de CJ Dropshipping aquí!
 
 st.title("🚀 Centro de Mando CEO")
-st.write("Conexión API: CJ Dropshipping & AliExpress (En desarrollo)")
+st.write("Catálogo en Vivo: CJ Dropshipping")
 st.divider()
 
-# Simulador de la API (Próximamente inyectaremos los datos reales aquí)
-productos_api = [
-    {"nombre": "Cama Nube Mascotas", "costo_fabrica": 20.00, "envio": 2.50, "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/800px-Cat03.jpg"},
-    {"nombre": "Humidificador Llama", "costo_fabrica": 15.00, "envio": 4.00, "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/A_simple_humidifier.jpg/800px-A_simple_humidifier.jpg"},
-    {"nombre": "Corrector Postura", "costo_fabrica": 10.00, "envio": 0.00, "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Posture_correction.jpg/800px-Posture_correction.jpg"}
-]
+# --- MOTOR DE BÚSQUEDA AUTOMÁTICA ---
+def obtener_productos_cj():
+    # Enlace oficial de la base de datos de CJ Dropshipping
+    url = "https://developers.cjdropshipping.com/api2.0/v1/product/list"
+    
+    # Aquí presentamos tu "identificación" oficial usando la API Key
+    headers = {
+        "CJ-Access-Token": CJ_API_KEY,
+        "Content-Type": "application/json"
+    }
+    
+    # Le decimos al algoritmo qué buscar (Ejemplo: 5 productos de Mascotas)
+    payload = {
+        "pageSize": 5,
+        "categoryName": "Pet" 
+    }
+    
+    try:
+        # Python viaja a China en fracciones de segundo y trae la respuesta
+        response = requests.post(url, headers=headers, json=payload)
+        if response.status_code == 200:
+            datos = response.json()
+            return datos.get("data", {}).get("list", [])
+        else:
+            st.error("Error al conectar con CJ Dropshipping. Revisa tu API Key.")
+            return []
+    except Exception as e:
+        st.error(f"Fallo en la conexión: {e}")
+        return []
 
-# --- EL NUEVO ALGORITMO DEL 15% DE GANANCIA ---
-for prod in productos_api:
-    if prod["envio"] <= 5.00:
-        costo_total = prod["costo_fabrica"] + prod["envio"]
-        # Nuevo margen estratégico del 15% establecido por el CEO
-        precio_venta_15 = costo_total * 1.15 
+# Ejecutamos el motor de búsqueda
+productos_reales = obtener_productos_cj()
+
+# --- EL ALGORITMO FINANCIERO DEL CEO ---
+if productos_reales:
+    for prod in productos_reales:
+        # Extraemos los datos reales del proveedor
+        nombre = prod.get("productNameEn", "Producto sin nombre")
+        precio_fabrica = float(prod.get("sellPrice", 0))
+        imagen = prod.get("productImage", "")
         
-        col1, col2 = st.columns([1, 2])
+        # Simulamos un costo de envío base de $4.50 para el cálculo automático
+        costo_envio = 4.50 
         
-        with col1:
-            st.image(prod["img"], use_column_width=True)
+        if costo_envio <= 5.00:
+            costo_total = precio_fabrica + costo_envio
             
-        with col2:
-            st.subheader(prod["nombre"])
-            st.write(f"Costo Fábrica: ${prod['costo_fabrica']:.2f}")
-            st.write(f"Envío Express: ${prod['envio']:.2f}")
+            # Aplicamos tu estrategia de margen agresivo del 15%
+            precio_venta_15 = costo_total * 1.15 
             
-            # Botón interactivo con el nuevo margen
-            if st.button(f"Lanzar a ${precio_venta_15:.2f} (15% Margen)", key=f"15_{prod['nombre']}"):
-                datos_para_ia = {
-                    "producto": prod["nombre"], 
-                    "precio": f"${precio_venta_15:.2f}",
-                    "imagen_url": prod["img"]
-                }
+            col1, col2 = st.columns([1, 2])
+            
+            with col1:
+                if imagen:
+                    st.image(imagen, use_column_width=True)
                 
-                try:
-                    requests.post(MAKE_WEBHOOK_URL, json=datos_para_ia)
-                    st.success(f"¡Orden enviada! La IA está creando la publicidad.")
-                except Exception as e:
-                    st.error(f"Fallo en la conexión: {e}")
+            with col2:
+                # Cortamos los nombres si son excesivamente largos
+                st.subheader(nombre[:60] + "...") 
+                st.write(f"**Costo Fábrica:** ${precio_fabrica:.2f}")
+                st.write(f"**Envío (Est.):** ${costo_envio:.2f}")
+                
+                if st.button(f"Lanzar a ${precio_venta_15:.2f} (15% Margen)", key=prod.get("pid")):
+                    datos_para_ia = {
+                        "producto": nombre, 
+                        "precio": f"${precio_venta_15:.2f}",
+                        "imagen_url": imagen
+                    }
                     
-        st.divider()
+                    try:
+                        requests.post(MAKE_WEBHOOK_URL, json=datos_para_ia)
+                        st.success("¡Orden enviada a Make! La IA está creando la publicidad en este instante.")
+                    except Exception as e:
+                        st.error(f"Fallo en el Webhook: {e}")
+                        
+            st.divider()
+else:
+    st.warning("El catálogo está vacío. Asegúrate de haber pegado correctamente tu API Key.")
