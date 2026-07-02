@@ -4,29 +4,26 @@ import requests
 # --- CONFIGURACIÓN DE LA PÁGINA MÓVIL ---
 st.set_page_config(page_title="Panel CEO", page_icon="📱", layout="centered")
 
-# Enlace de Make (Simulador por ahora)
-MAKE_WEBHOOK_URL = "https://hook.us2.make.com/7gwzs8q25amgf72xlpwatafvhgfvgal3"
+# Reemplaza este enlace con tu Webhook real de Make
+MAKE_WEBHOOK_URL = "https://hook.us1.make.com/tu_codigo_secreto" 
 
-# Simulador de los productos recomendados por la IA
-# Simulador con imágenes reales (.jpg) para pasar el estricto filtro de Instagram
-productos_encontrados = [
-    {"nombre": "Cama Nube Mascotas", "costo": 12.00, "envio": 2.50, "img": "https://www.magnific.com/es/foto-gratis/arbol-fondo-blanco_977959.htm#fromView=keyword&page=1&position=1&uuid=4342f039-da07-4125-b3c6-e524967a0df6&query=Arbol+jpg"},
-    {"nombre": "Humidificador Llama", "costo": 15.00, "envio": 0.00, "img": "https://www.magnific.com/es/foto-gratis/arbol-fondo-blanco_977959.htm#fromView=keyword&page=1&position=1&uuid=4342f039-da07-4125-b3c6-e524967a0df6&query=Arbol+jpg"},
-    {"nombre": "Corrector Postura", "costo": 8.00, "envio": 1.50, "img": "https://www.magnific.com/es/foto-gratis/arbol-fondo-blanco_977959.htm#fromView=keyword&page=1&position=1&uuid=4342f039-da07-4125-b3c6-e524967a0df6&query=Arbol+jpg"},
-    {"nombre": "Cepillo Quita Pelos", "costo": 4.00, "envio": 4.50, "img": "https://www.magnific.com/es/foto-gratis/arbol-fondo-blanco_977959.htm#fromView=keyword&page=1&position=1&uuid=4342f039-da07-4125-b3c6-e524967a0df6&query=Arbol+jpg"},
-    {"nombre": "Lámpara Galaxia", "costo": 18.00, "envio": 3.00, "img": "https://www.magnific.com/es/foto-gratis/arbol-fondo-blanco_977959.htm#fromView=keyword&page=1&position=1&uuid=4342f039-da07-4125-b3c6-e524967a0df6&query=Arbol+jpg"}
-]
-
-# --- ENCABEZADO ---
-st.title("🚀 Panel de Mando CEO")
-st.write("Catálogo de Oportunidades - Selecciona el producto ganador del turno.")
+st.title("🚀 Centro de Mando CEO")
+st.write("Conexión API: CJ Dropshipping & AliExpress (En desarrollo)")
 st.divider()
 
-# --- CATÁLOGO CON LÓGICA DE NEGOCIO ---
-for prod in productos_encontrados:
+# Simulador de la API (Próximamente inyectaremos los datos reales aquí)
+productos_api = [
+    {"nombre": "Cama Nube Mascotas", "costo_fabrica": 20.00, "envio": 2.50, "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/800px-Cat03.jpg"},
+    {"nombre": "Humidificador Llama", "costo_fabrica": 15.00, "envio": 4.00, "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/A_simple_humidifier.jpg/800px-A_simple_humidifier.jpg"},
+    {"nombre": "Corrector Postura", "costo_fabrica": 10.00, "envio": 0.00, "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Posture_correction.jpg/800px-Posture_correction.jpg"}
+]
+
+# --- EL NUEVO ALGORITMO DEL 15% DE GANANCIA ---
+for prod in productos_api:
     if prod["envio"] <= 5.00:
-        costo_total = prod["costo"] + prod["envio"]
-        precio_venta = costo_total * 1.20 # 20% margen de ganancia
+        costo_total = prod["costo_fabrica"] + prod["envio"]
+        # Nuevo margen estratégico del 15% establecido por el CEO
+        precio_venta_15 = costo_total * 1.15 
         
         col1, col2 = st.columns([1, 2])
         
@@ -35,20 +32,20 @@ for prod in productos_encontrados:
             
         with col2:
             st.subheader(prod["nombre"])
-            st.write(f"**Costo Total (con envío):** ${costo_total:.2f}")
-            st.write(f"**Precio de Venta Sugerido:** ${precio_venta:.2f}")
+            st.write(f"Costo Fábrica: ${prod['costo_fabrica']:.2f}")
+            st.write(f"Envío Express: ${prod['envio']:.2f}")
             
-            if st.button(f"Lanzar Publicidad", key=prod['nombre']):
-                # AQUÍ ESTÁ EL PAQUETE JSON COMPLETO
+            # Botón interactivo con el nuevo margen
+            if st.button(f"Lanzar a ${precio_venta_15:.2f} (15% Margen)", key=f"15_{prod['nombre']}"):
                 datos_para_ia = {
                     "producto": prod["nombre"], 
-                    "precio": f"${precio_venta:.2f}",
+                    "precio": f"${precio_venta_15:.2f}",
                     "imagen_url": prod["img"]
                 }
                 
                 try:
                     requests.post(MAKE_WEBHOOK_URL, json=datos_para_ia)
-                    st.success(f"¡Orden ejecutada! La IA está creando anuncios para {prod['nombre']}.")
+                    st.success(f"¡Orden enviada! La IA está creando la publicidad.")
                 except Exception as e:
                     st.error(f"Fallo en la conexión: {e}")
                     
