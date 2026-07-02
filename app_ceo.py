@@ -6,7 +6,7 @@ st.set_page_config(page_title="Panel CEO", page_icon="📱", layout="centered")
 
 # --- CONEXIONES MAESTRAS ---
 MAKE_WEBHOOK_URL = "https://hook.us2.make.com/7gwzs8q25amgf72xlpwatafvhgfvgal3" # Reemplaza con tu Webhook de Make
-CJ_API_KEY = "CJ5573236@api@9880f81e5f144c34b5f791f5c1d1e6da"
+CJ_API_KEY = "CJ5573236@api@a1b66f3018ba49cfa247a5e8caa445d3"
 # <--- ¡Pega tu llave de CJ Dropshipping aquí!
 
 st.title("🚀 Centro de Mando CEO")
