@@ -2,92 +2,44 @@ import streamlit as st
 import requests
 
 # --- CONFIGURACIÓN DE LA PÁGINA MÓVIL ---
-st.set_page_config(page_title="Panel CEO", page_icon="📱", layout="centered")
+st.set_page_config(page_title="Panel CEO", page_icon="🚀", layout="centered")
 
-# --- CONEXIONES MAESTRAS ---
-MAKE_WEBHOOK_URL = "https://hook.us2.make.com/7gwzs8q25amgf72xlpwatafvhgfvgal3" # Reemplaza con tu Webhook de Make
-CJ_API_KEY = "CJ5573236@api@a1b66f3018ba49cfa247a5e8caa445d3"
-# <--- ¡Pega tu llave de CJ Dropshipping aquí!
+# --- TU ENLACE SECRETO DE MAKE ---
+# Reemplaza esto con tu Webhook real de Make, conservando las comillas
+MAKE_WEBHOOK_URL = "https://hook.us2.make.com/7gwzs8q25amgf72xlpwatafvhgfvgal3"
 
-st.title("🚀 Centro de Mando CEO")
-st.write("Catálogo en Vivo: CJ Dropshipping")
+# --- DISEÑO DEL PANEL ---
+st.title("📱 Centro de Mando CEO")
+st.write("Selecciona un nicho. La IA buscará el producto más viral, redactará el anuncio y lo publicará automáticamente.")
 st.divider()
 
-# --- MOTOR DE BÚSQUEDA AUTOMÁTICA ---
-def obtener_productos_cj():
-    # Enlace oficial de la base de datos de CJ Dropshipping
-    url = "https://developers.cjdropshipping.com/api2.0/v1/product/list"
-    
-    # Aquí presentamos tu "identificación" oficial usando la API Key
-    headers = {
-        "CJ-Access-Token": CJ_API_KEY,
-        "Content-Type": "application/json"
-    }
-    
-    # Le decimos al algoritmo qué buscar (Ejemplo: 5 productos de Mascotas)
-    payload = {
-        "pageSize": 5,
-        "categoryName": "Pet" 
-    }
-    
+st.subheader("🎯 Categorías Virales")
+
+# --- FUNCIÓN DE LANZAMIENTO A LA NUBE ---
+def lanzar_campana(categoria):
+    # Ahora solo le enviamos el "Tema" a Make. Make hará el resto.
+    datos_para_ia = {"categoria": categoria}
     try:
-        # Python viaja a China en fracciones de segundo y trae la respuesta
-        response = requests.post(url, headers=headers, json=payload)
-        if response.status_code == 200:
-            datos = response.json()
-            return datos.get("data", {}).get("list", [])
+        respuesta = requests.post(MAKE_WEBHOOK_URL, json=datos_para_ia)
+        if respuesta.status_code == 200:
+            st.success(f"¡Orden ejecutada! Make está buscando un producto único de '{categoria}' y creando la campaña.")
         else:
-            st.error("Error al conectar con CJ Dropshipping. Revisa tu API Key.")
-            return []
+            st.warning("La orden se envió, pero revisa tu escenario en Make.")
     except Exception as e:
-        st.error(f"Fallo en la conexión: {e}")
-        return []
+        st.error(f"Error de conexión con Make: {e}")
 
-# Ejecutamos el motor de búsqueda
-productos_reales = obtener_productos_cj()
+# --- BOTONES ESTRATÉGICOS DEL CEO ---
+if st.button("💻 Búsqueda Viral: Tecnología", use_container_width=True):
+    lanzar_campana("Tecnología")
 
-# --- EL ALGORITMO FINANCIERO DEL CEO ---
-if productos_reales:
-    for prod in productos_reales:
-        # Extraemos los datos reales del proveedor
-        nombre = prod.get("productNameEn", "Producto sin nombre")
-        precio_fabrica = float(prod.get("sellPrice", 0))
-        imagen = prod.get("productImage", "")
-        
-        # Simulamos un costo de envío base de $4.50 para el cálculo automático
-        costo_envio = 4.50 
-        
-        if costo_envio <= 5.00:
-            costo_total = precio_fabrica + costo_envio
-            
-            # Aplicamos tu estrategia de margen agresivo del 15%
-            precio_venta_15 = costo_total * 1.15 
-            
-            col1, col2 = st.columns([1, 2])
-            
-            with col1:
-                if imagen:
-                    st.image(imagen, use_column_width=True)
-                
-            with col2:
-                # Cortamos los nombres si son excesivamente largos
-                st.subheader(nombre[:60] + "...") 
-                st.write(f"**Costo Fábrica:** ${precio_fabrica:.2f}")
-                st.write(f"**Envío (Est.):** ${costo_envio:.2f}")
-                
-                if st.button(f"Lanzar a ${precio_venta_15:.2f} (15% Margen)", key=prod.get("pid")):
-                    datos_para_ia = {
-                        "producto": nombre, 
-                        "precio": f"${precio_venta_15:.2f}",
-                        "imagen_url": imagen
-                    }
-                    
-                    try:
-                        requests.post(MAKE_WEBHOOK_URL, json=datos_para_ia)
-                        st.success("¡Orden enviada a Make! La IA está creando la publicidad en este instante.")
-                    except Exception as e:
-                        st.error(f"Fallo en el Webhook: {e}")
-                        
-            st.divider()
-else:
-    st.warning("El catálogo está vacío. Asegúrate de haber pegado correctamente tu API Key.")
+if st.button("🐶 Búsqueda Viral: Mascotas", use_container_width=True):
+    lanzar_campana("Mascotas")
+
+if st.button("🛋️ Búsqueda Viral: Hogar y Estética", use_container_width=True):
+    lanzar_campana("Hogar y Estética")
+
+if st.button("🧘‍♀️ Búsqueda Viral: Salud y Bienestar", use_container_width=True):
+    lanzar_campana("Salud y Bienestar")
+
+st.divider()
+st.caption("Sistema Operativo IA - Ejecución en la Nube ☁️")
